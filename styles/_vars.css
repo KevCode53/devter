@@ -1,0 +1,9 @@
+:root {
+  --bg-point: rgba(0, 153, 255, .3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-point: rgba(230, 230, 230, .2);
+  }
+}

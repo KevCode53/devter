@@ -1,9 +1,14 @@
+import styles from "./styles";
+
 const AppLayout = ({children}) => {
   return (
    <>
-    <main>
-      {children}
-    </main>
+    <div>
+      <main>
+        {children}
+      </main>
+    </div>
+    <style jsx>{styles}</style>
    </> 
   )
 }
