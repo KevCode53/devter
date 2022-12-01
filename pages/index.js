@@ -6,8 +6,15 @@ import AppLayout from '../components/AppLayout'
 import { colors } from '../styles/theme'
 import Button from '../components/Button'
 import GitHub from '../components/Icons/Github'
+import {signInWithGitHub} from '../supabase/client'
+
 
 export default function Home() {
+
+  const handleClick = () => {
+    signInWithGitHub().then(res => {console.log(res)})
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +29,7 @@ export default function Home() {
             <h1 className={styles.title}>Devter</h1>
             <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
             <div>
-              <Button>
+              <Button onClick={handleClick}>
                 <GitHub width={32} height={32} fill='#fff'/>
                 Login with Github
               </Button>
