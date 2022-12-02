@@ -6,13 +6,35 @@ import AppLayout from '../components/AppLayout'
 import { colors } from '../styles/theme'
 import Button from '../components/Button'
 import GitHub from '../components/Icons/Github'
-import {signInWithGitHub} from '../supabase/client'
+import {signInWithGitHub, getGitHubUser, getStateUser, signout} from '../supabase/client'
+import { useEffect, useState } from 'react'
 
 
 export default function Home() {
+  const [user, setUser] = useState(null)
+
+  getStateUser
 
   const handleClick = () => {
-    signInWithGitHub().then(res => {console.log(res)})
+    signInWithGitHub()
+  }
+
+  useEffect(() => {
+    checkUser()
+    window.addEventListener('hashchange', () => {
+      checkUser()
+    })
+  }, [])
+
+  const checkUser = async() => {
+    getGitHubUser.then(user => {
+      if (user) {
+        const { avatar, username, emial } = user
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
   }
 
   return (
@@ -29,10 +51,19 @@ export default function Home() {
             <h1 className={styles.title}>Devter</h1>
             <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
             <div>
-              <Button onClick={handleClick}>
+              {
+                user === null ?
+              (<Button onClick={handleClick}>
                 <GitHub width={32} height={32} fill='#fff'/>
                 Login with Github
-              </Button>
+              </Button>) :
+              (<div>
+                <img src={user.avatar} />
+                <strong>{user.username}</strong>
+                <button onClick={signout}>Logout</button>
+              </div>
+              )
+              }
             </div>
           </section>
         </AppLayout>
