@@ -22,6 +22,7 @@ const Button = ({children, onClick}) => {
         }
         button > :global(svg) {
           margin-right: 8px;
+          width: auto;
         }
         button:hover {
           opacity: .7

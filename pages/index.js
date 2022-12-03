@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 export default function Home() {
   const [user, setUser] = useState(null)
 
-  getStateUser
+  // getStateUser
 
   const handleClick = () => {
     signInWithGitHub()
@@ -50,7 +50,7 @@ export default function Home() {
             <img src='/Logo.png' alt='Logo' />
             <h1 className={styles.title}>Devter</h1>
             <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
-            <div>
+            <div className='login'>
               {
                 user === null ?
               (<Button onClick={handleClick}>
@@ -60,7 +60,7 @@ export default function Home() {
               (<div>
                 <img src={user.avatar} />
                 <strong>{user.username}</strong>
-                <button onClick={signout}>Logout</button>
+                <button className='logout-btn' onClick={signout}>Logout</button>
               </div>
               )
               }
@@ -88,8 +88,17 @@ export default function Home() {
           font-size: 18px;
           margin: 0;
         }
-        div {
-          margin-top: 16px;
+        div .login {
+          margin-top: 1.6rem;
+        }
+        .logout-btn {
+          background: ${colors.secondary};
+          padding: .8rem 2.4rem;
+          border-radius: 9999px;
+          margin-top: 1.6rem;
+        }
+        .logout-btn:hover {
+          opacity: .7
         }
       `}</style>
     </div>
