@@ -1,11 +1,9 @@
-import { colors } from "../../styles/theme";
+import { colors } from "../../styles/theme"
 
-const Button = ({children, onClick}) => {
+const Button = ({ children, onClick }) => {
   return (
     <>
-      <button onClick={onClick}>
-        {children}
-      </button>
+      <button onClick={onClick}>{children}</button>
       <style jsx>{`
         button {
           align-items: center;
@@ -25,11 +23,11 @@ const Button = ({children, onClick}) => {
           width: auto;
         }
         button:hover {
-          opacity: .7
+          opacity: 0.7;
         }
       `}</style>
     </>
-  );
+  )
 }
 
-export default Button;
+export default Button

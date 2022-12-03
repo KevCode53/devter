@@ -1,5 +1,5 @@
-@import '_vars.css'; 
-@import '_reset.css';
+@import "_vars.css";
+@import "_reset.css";
 
 html,
 body {
@@ -7,8 +7,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-image: 
-    radial-gradient(var(--bg-point) 1px, transparent 1px),
+  background-image: radial-gradient(var(--bg-point) 1px, transparent 1px),
     radial-gradient(var(--bg-point) 1px, transparent 1px);
   background-position: 0 0, 25px 25px;
   background-size: 50px 50px;
@@ -30,11 +29,9 @@ a {
   body {
     color: white;
     background: black;
-    background-image: 
-      radial-gradient(var(--bg-point) 1px, transparent 1px),
+    background-image: radial-gradient(var(--bg-point) 1px, transparent 1px),
       radial-gradient(var(--bg-point) 1px, transparent 1px);
     background-position: 0 0, 25px 25px;
     background-size: 50px 50px;
   }
 }
-

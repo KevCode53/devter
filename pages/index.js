@@ -1,14 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import AppLayout from '../components/AppLayout'
-import { colors } from '../styles/theme'
-import Button from '../components/Button'
-import GitHub from '../components/Icons/Github'
-import {signInWithGitHub, getGitHubUser, getStateUser, signout} from '../supabase/client'
-import { useEffect, useState } from 'react'
-
+import Head from "next/head"
+import Image from "next/image"
+import styles from "../styles/Home.module.css"
+import Link from "next/link"
+import AppLayout from "../components/AppLayout"
+import { colors } from "../styles/theme"
+import Button from "../components/Button"
+import GitHub from "../components/Icons/Github"
+import { signInWithGitHub, getGitHubUser, signout } from "../supabase/client"
+import { useEffect, useState } from "react"
 
 export default function Home() {
   const [user, setUser] = useState(null)
@@ -21,15 +20,15 @@ export default function Home() {
 
   useEffect(() => {
     checkUser()
-    window.addEventListener('hashchange', () => {
+    window.addEventListener("hashchange", () => {
       checkUser()
     })
   }, [])
 
-  const checkUser = async() => {
-    getGitHubUser.then(user => {
+  const checkUser = async () => {
+    getGitHubUser.then((user) => {
       if (user) {
-        const { avatar, username, emial } = user
+        // const { avatar, username, emial } = user
         setUser(user)
       } else {
         setUser(null)
@@ -45,28 +44,31 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-        <AppLayout>
-          <section>
-            <img src='/Logo.png' alt='Logo' />
-            <h1 className={styles.title}>Devter</h1>
-            <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
-            <div className='login'>
-              {
-                user === null ?
-              (<Button onClick={handleClick}>
-                <GitHub width={32} height={32} fill='#fff'/>
+      <AppLayout>
+        <section>
+          <img src="/Logo.png" alt="Logo" />
+          <h1 className={styles.title}>Devter</h1>
+          <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
+          <div className="login">
+            {user === null ? (
+              <Button onClick={handleClick}>
+                <GitHub width={32} height={32} fill="#fff" />
                 Login with Github
-              </Button>) :
-              (<div>
-                <img src={user.avatar} />
-                <strong>{user.username}</strong>
-                <button className='logout-btn' onClick={signout}>Logout</button>
-              </div>
-              )
-              }
-            </div>
-          </section>
-        </AppLayout>
+              </Button>
+            ) : (
+              <>
+                <div className="avatar">
+                  <img src={user.avatar} />
+                  <strong>{user.username}</strong>
+                </div>
+                <button className="logout-btn" onClick={signout}>
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+        </section>
+      </AppLayout>
 
       <style jsx>{`
         section {
@@ -74,6 +76,8 @@ export default function Home() {
           height: 100%;
           place-items: center;
           place-content: center;
+          align-items: center;
+          text-align: center;
         }
         img {
           width: 120px;
@@ -90,15 +94,20 @@ export default function Home() {
         }
         div .login {
           margin-top: 1.6rem;
+          display: grid;
         }
         .logout-btn {
           background: ${colors.secondary};
-          padding: .8rem 2.4rem;
+          padding: 0.8rem 2.4rem;
           border-radius: 9999px;
           margin-top: 1.6rem;
         }
         .logout-btn:hover {
-          opacity: .7
+          opacity: 0.7;
+        }
+        .avatar {
+          display: flex;
+          align-items: end;
         }
       `}</style>
     </div>

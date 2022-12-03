@@ -1,16 +1,14 @@
-import styles from "./styles";
+import styles from "./styles"
 
-const AppLayout = ({children}) => {
+const AppLayout = ({ children }) => {
   return (
-   <>
-    <div>
-      <main>
-        {children}
-      </main>
-    </div>
-    <style jsx>{styles}</style>
-   </> 
+    <>
+      <div>
+        <main>{children}</main>
+      </div>
+      <style jsx>{styles}</style>
+    </>
   )
 }
 
-export default AppLayout;
+export default AppLayout
