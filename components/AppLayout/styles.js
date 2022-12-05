@@ -6,7 +6,6 @@ export default css`
     display: grid;
     height: 100vh;
     place-items: center;
-    background: pink;
     position: relative;
   }
 
@@ -17,7 +16,7 @@ export default css`
     width: 100%;
     height: 100%;
     position: relative;
-    overflow-y: scroll;
+    overflow-y: hidden;
   }
   @media (prefers-color-scheme: dark) {
     main {

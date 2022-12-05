@@ -1,0 +1,14 @@
+.article {
+  padding: 1rem 1.5rem;
+  display: flex;
+  border-bottom: 0.2rem solid #eaf7ff;
+}
+.userInfo {
+  display: flex;
+  gap: 1rem;
+}
+.userInfo > p,
+.userInfo > span {
+  font-weight: 100;
+  color: rgba(255, 255, 255, 0.5);
+}
