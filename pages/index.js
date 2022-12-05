@@ -39,7 +39,7 @@ export default function Home() {
         // const { avatar, username, emial } = user
         setUser(user)
       } else {
-        setUser(undefined)
+        setUser(null)
       }
     })
   }
@@ -57,6 +57,7 @@ export default function Home() {
           <img src="/Logo.png" alt="Logo" />
           <h1 className={styles.title}>Devter</h1>
           <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
+
           <div className="login">
             {user === null && (
               <Button onClick={handleClick}>
@@ -65,24 +66,7 @@ export default function Home() {
               </Button>
             )}
 
-            {
-              user === undefined && <Loading />
-              /* { user && user.avatar && (
-              <>
-                <div className="avatar">
-                  <Avatar
-                    alt={user.username}
-                    text={user.username}
-                    src={user.avatar}
-                    withText
-                  />
-                </div>
-                <button className="logout-btn" onClick={signout}>
-                  Logout
-                </button>
-              </>
-            )} */
-            }
+            {user === undefined && <Loading />}
           </div>
         </section>
       </AppLayout>
