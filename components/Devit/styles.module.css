@@ -1,7 +1,7 @@
 .article {
   padding: 1rem 1.5rem;
   display: flex;
-  border-bottom: 0.2rem solid #eaf7ff;
+  border-bottom: 0.1rem solid rgb(47, 51, 54);
 }
 .userInfo {
   display: flex;

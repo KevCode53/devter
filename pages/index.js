@@ -9,9 +9,12 @@ import GitHub from "components/Icons/Github"
 import { signInWithGitHub, getGitHubUser, signout } from "supabase/client"
 import { useEffect, useState } from "react"
 import Avatar from "components/Avatar"
+import { useRouter } from "next/router"
+import Loading from "components/Loading"
 
 export default function Home() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(undefined)
+  const router = useRouter()
 
   // getStateUser
 
@@ -26,13 +29,17 @@ export default function Home() {
     })
   }, [])
 
+  useEffect(() => {
+    user && router.replace("/home")
+  }, [user])
+
   const checkUser = async () => {
     getGitHubUser.then((user) => {
       if (user) {
         // const { avatar, username, emial } = user
         setUser(user)
       } else {
-        setUser(null)
+        setUser(undefined)
       }
     })
   }
@@ -51,12 +58,16 @@ export default function Home() {
           <h1 className={styles.title}>Devter</h1>
           <h2>Talk about development with developers 👨‍💻👩‍💻</h2>
           <div className="login">
-            {user === null ? (
+            {user === null && (
               <Button onClick={handleClick}>
                 <GitHub width={32} height={32} fill="#fff" />
                 Login with Github
               </Button>
-            ) : (
+            )}
+
+            {
+              user === undefined && <Loading />
+              /* { user && user.avatar && (
               <>
                 <div className="avatar">
                   <Avatar
@@ -70,7 +81,8 @@ export default function Home() {
                   Logout
                 </button>
               </>
-            )}
+            )} */
+            }
           </div>
         </section>
       </AppLayout>
