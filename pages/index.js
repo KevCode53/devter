@@ -1,13 +1,14 @@
 import Head from "next/head"
 import Image from "next/image"
-import styles from "../styles/Home.module.css"
+import styles from "styles/Home.module.css"
 import Link from "next/link"
-import AppLayout from "../components/AppLayout"
-import { colors } from "../styles/theme"
-import Button from "../components/Button"
-import GitHub from "../components/Icons/Github"
-import { signInWithGitHub, getGitHubUser, signout } from "../supabase/client"
+import AppLayout from "components/AppLayout"
+import { colors } from "styles/theme"
+import Button from "components/Button"
+import GitHub from "components/Icons/Github"
+import { signInWithGitHub, getGitHubUser, signout } from "supabase/client"
 import { useEffect, useState } from "react"
+import Avatar from "components/Avatar"
 
 export default function Home() {
   const [user, setUser] = useState(null)
@@ -58,8 +59,12 @@ export default function Home() {
             ) : (
               <>
                 <div className="avatar">
-                  <img src={user.avatar} />
-                  <strong>{user.username}</strong>
+                  <Avatar
+                    alt={user.username}
+                    text={user.username}
+                    src={user.avatar}
+                    withText
+                  />
                 </div>
                 <button className="logout-btn" onClick={signout}>
                   Logout
