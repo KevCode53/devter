@@ -7,9 +7,10 @@
   border-radius: 9999px;
   height: 4.9rem;
   width: 4.9rem;
-  border: 0.2rem solid #ccc;
+  /* border: 0.2rem solid #ccc; */
   font-size: 0.8rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(0.3rem);
   display: flex;
   align-items: center;
   justify-content: center;

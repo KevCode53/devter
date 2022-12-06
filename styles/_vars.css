@@ -1,5 +1,7 @@
 :root {
   --bg-point: rgba(0, 153, 255, 0.3);
+  --dark_bg_transparent: #131313a2;
+  --dark_bg: #131313;
 }
 
 @media (prefers-color-scheme: dark) {

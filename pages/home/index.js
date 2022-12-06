@@ -3,20 +3,27 @@ import Avatar from "components/Avatar"
 import Styles from "./styles.module.css"
 import { useEffect, useState } from "react"
 import Devit from "components/Devit"
+import { useUser } from "hooks/useUser"
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([])
+  const { user } = useUser()
 
   useEffect(() => {
-    fetch("/api/statuses/home_timeline")
-      .then((res) => res.json())
-      .then(setTimeline)
+    ;(user !== null) & (user !== undefined) &&
+      fetch("/api/statuses/home_timeline")
+        .then((res) => res.json())
+        .then(setTimeline)
   }, [])
 
   return (
     <AppLayout>
       <header className={Styles.header}>
-        <Avatar />
+        {(user !== undefined) & (user !== null) ? (
+          <Avatar src={user.avatar} alt={user.username} />
+        ) : (
+          <Avatar />
+        )}
         <h2>Inicio</h2>
       </header>
       <section className={Styles.section}>
@@ -33,13 +40,7 @@ const HomePage = () => {
           )
         })}
       </section>
-      <nav className={Styles.nav}>
-        <ul>
-          <li>
-            <a>Hola</a>
-          </li>
-        </ul>
-      </nav>
+      <nav className={Styles.nav}></nav>
     </AppLayout>
   )
 }

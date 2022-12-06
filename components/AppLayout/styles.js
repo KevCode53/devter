@@ -6,7 +6,6 @@ export default css`
     display: grid;
     height: 100vh;
     place-items: center;
-    position: relative;
   }
 
   main {
@@ -15,8 +14,8 @@ export default css`
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     position: relative;
-    overflow-y: hidden;
   }
   @media (prefers-color-scheme: dark) {
     main {

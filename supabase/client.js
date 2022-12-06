@@ -13,17 +13,18 @@ export const signInWithGitHub = async () => {
 
 export const getStateUser = supabase.auth.onAuthStateChange(
   (event, session) => {
-    console.log(event, session)
     return { event, session }
   }
 )
 
 export const getGitHubUser = supabase.auth.getUser().then(({ error, data }) => {
   if (error) return null
+  console.log(data)
   const { user } = data
-  const { user_metadata } = user
+  const { user_metadata, id } = user
   const { user_name, avatar_url, email } = user_metadata
   return {
+    id,
     avatar: avatar_url,
     username: user_name,
     email,
@@ -33,3 +34,5 @@ export const getGitHubUser = supabase.auth.getUser().then(({ error, data }) => {
 export const signout = async () => {
   const { error } = supabase.auth.signOut()
 }
+
+export const addDevit = ({ avatar, content, userId, userName }) => {}

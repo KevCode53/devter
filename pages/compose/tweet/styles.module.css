@@ -1,0 +1,51 @@
+.header {
+  display: flex;
+  padding: 0.8rem 1.6rem;
+  justify-content: space-between;
+}
+.div {
+  width: auto;
+}
+.contianer {
+  display: flex;
+  padding: 0 1.6rem;
+  width: 100%;
+  align-items: flex-start;
+}
+.contianer > div:first-child {
+  width: 7rem;
+}
+
+.contianer > div:last-child {
+  width: 100%;
+}
+
+.textarea {
+  /* border: .1px solid rgb(47, 51, 54); */
+  padding: 1.5rem;
+  font-size: 2.1rem;
+  width: 100%;
+  resize: none;
+  min-height: 20rem;
+  outline: 0;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.section div:first-child {
+  border-bottom: 0.1rem solid rgb(47, 51, 54);
+  padding: 0.8rem;
+  font-size: 1.4rem;
+}
+.section div:nth-child(2) {
+  padding: 0.8rem;
+}
+
+.section ul {
+  display: flex;
+}
