@@ -5,10 +5,20 @@ import { useState } from "react"
 import Styles from "./styles.module.css"
 import { useUser } from "hooks/useUser"
 import { addDevit } from "supabase/devit"
+import { useRouter } from "next/router"
+
+const CMOPOSE_STATES = {
+  USER_NOT_KNOWN: 0,
+  LOADING: 1,
+  SUCCESS: 2,
+  ERROR: -1,
+}
 
 const Tweet = () => {
   const [message, setMessage] = useState("")
+  const [status, setStatus] = useState(CMOPOSE_STATES.USER_NOT_KNOWN)
   const { user } = useUser()
+  const router = useRouter()
 
   const handleChange = (event) => {
     const { value } = event.target
@@ -17,12 +27,25 @@ const Tweet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setStatus(CMOPOSE_STATES.LOADING)
     addDevit({
       created_at: new Date().toISOString(),
       user_id: user.id,
       content: message,
+      email: user.email,
+      avatar: user.avatar,
+      username: user.username,
     })
+      .then(() => {
+        router.push("/home")
+      })
+      .catch((err) => {
+        console.error(err)
+        setStatus(CMOPOSE_STATES.ERROR)
+      })
   }
+
+  const isButtonDisabled = !message.length || status === CMOPOSE_STATES.LOADING
 
   return (
     <AppLayout>
@@ -43,7 +66,7 @@ const Tweet = () => {
               className={Styles.textarea}
               placeholder="¿Qué esta pasando?"
             ></textarea>
-            <Button disabled={message.length === 0}>Devitear</Button>
+            <Button disabled={isButtonDisabled}>Devitear</Button>
           </form>
           <section className={Styles.section}>
             <div>

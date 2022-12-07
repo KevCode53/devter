@@ -4,6 +4,9 @@ import Styles from "./styles.module.css"
 import { useEffect, useState } from "react"
 import Devit from "components/Devit"
 import { useUser } from "hooks/useUser"
+import { fetchLatestDevits } from "supabase/devit"
+import { getUsers } from "supabase/users"
+import { getTimeGo } from "utils/timeGo"
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([])
@@ -11,9 +14,12 @@ const HomePage = () => {
 
   useEffect(() => {
     if (user !== null || user !== undefined) {
-      fetch("/api/statuses/home_timeline")
-        .then((res) => res.json())
-        .then(setTimeline)
+      // fetch("/api/statuses/home_timeline")
+      //   .then((res) => res.json())
+      //   .then(setTimeline)
+      fetchLatestDevits().then((res) => {
+        setTimeline(res.data)
+      })
     }
   }, [])
 
@@ -29,13 +35,14 @@ const HomePage = () => {
       </header>
       <section className={Styles.section}>
         {timeline.map((devit) => {
+          console.log(getTimeGo(devit.created_at))
           return (
             <Devit
               avatar={devit.avatar}
               name={devit.name}
               key={devit.id}
-              timeStamp={devit.timeStamp}
-              message={devit.message}
+              timeStamp={devit.created_at}
+              message={devit.content}
               username={devit.username}
             />
           )
