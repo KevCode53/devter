@@ -34,5 +34,3 @@ export const getGitHubUser = supabase.auth.getUser().then(({ error, data }) => {
 export const signout = async () => {
   const { error } = supabase.auth.signOut()
 }
-
-export const addDevit = ({ avatar, content, userId, userName }) => {}

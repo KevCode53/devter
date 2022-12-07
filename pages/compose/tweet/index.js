@@ -4,7 +4,7 @@ import Button from "components/Button"
 import { useState } from "react"
 import Styles from "./styles.module.css"
 import { useUser } from "hooks/useUser"
-import { addDevit } from "supabase/client"
+import { addDevit } from "supabase/devit"
 
 const Tweet = () => {
   const [message, setMessage] = useState("")
@@ -18,10 +18,9 @@ const Tweet = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     addDevit({
-      avatar: user.avatar,
+      created_at: new Date().toISOString(),
+      user_id: user.id,
       content: message,
-      userId: user.id,
-      userName: user.username,
     })
   }
 
@@ -29,9 +28,7 @@ const Tweet = () => {
     <AppLayout>
       <header className={Styles.header}>
         <button>back</button>
-        <div className={Styles.div}>
-          <Button disabled={message.length === 0}>Devitear</Button>
-        </div>
+        <div className={Styles.div}></div>
       </header>
       <div className={Styles.contianer}>
         {(user !== undefined) & (user !== null) ? (
@@ -46,6 +43,7 @@ const Tweet = () => {
               className={Styles.textarea}
               placeholder="¿Qué esta pasando?"
             ></textarea>
+            <Button disabled={message.length === 0}>Devitear</Button>
           </form>
           <section className={Styles.section}>
             <div>

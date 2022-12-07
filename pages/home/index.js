@@ -10,10 +10,11 @@ const HomePage = () => {
   const { user } = useUser()
 
   useEffect(() => {
-    ;(user !== null) & (user !== undefined) &&
+    if (user !== null || user !== undefined) {
       fetch("/api/statuses/home_timeline")
         .then((res) => res.json())
         .then(setTimeline)
+    }
   }, [])
 
   return (
