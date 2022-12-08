@@ -35,14 +35,13 @@ const HomePage = () => {
       </header>
       <section className={Styles.section}>
         {timeline.map((devit) => {
-          console.log(getTimeGo(devit.created_at))
           return (
             <Devit
               avatar={devit.avatar}
               name={devit.name}
               key={devit.id}
-              timeStamp={devit.created_at}
-              message={devit.content}
+              created_at={devit.created_at}
+              content={devit.content}
               username={devit.username}
             />
           )

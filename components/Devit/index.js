@@ -1,7 +1,10 @@
 import Styles from "./styles.module.css"
 import Avatar from "components/Avatar"
+import { useEffect } from "react"
+import { getTimeGo } from "utils/timeGo"
 
-const Devit = ({ avatar, username, timeStamp, name, message, id }) => {
+const Devit = ({ avatar, username, created_at, name, content, id }) => {
+  const timeGo = getTimeGo(created_at)
   return (
     <>
       <article className={Styles.article} key={id}>
@@ -12,9 +15,9 @@ const Devit = ({ avatar, username, timeStamp, name, message, id }) => {
           <div className={Styles.userInfo}>
             <strong>{name || username}</strong>
             <p>@{username}</p>
-            <span>{timeStamp}</span>
+            <span>{timeGo}</span>
           </div>
-          <p>{message}</p>
+          <p>{content}</p>
         </section>
       </article>
       <style jsx>{`

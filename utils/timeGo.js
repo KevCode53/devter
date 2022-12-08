@@ -27,16 +27,46 @@ export const getTimeGo = (date) => {
   interval = interval - minutes * msec_mins
   const seconds = Math.floor(interval / msec_segs)
 
-  const data = { years, months, days, hours, minutes, seconds }
+  if (seconds > 1 && minutes < 1) {
+    return `Hace ${seconds}segs.`
+  } else if (minutes >= 1 && hours < 1) {
+    if (minutes === 1) {
+      return `Hace ${minutes} minuto y ${seconds} segs.`
+    }
+    return `Hace ${minutes} minutos y ${seconds} segs.`
+  } else if (hours >= 1 && days < 1) {
+    return `${hours}h`
+  } else if (months >= 1 && years < 1) {
+    return created.toLocaleString("default", {
+      month: "short",
+      day: "numeric",
+    })
+  } else if (years > 1) {
+    return created.toLocaleString("default", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
 
-  // console.info(
-  //   `Han pasado ${years} años, ${months} meses,  ${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos..!`
-  // )
-
-  switch (data) {
-    case data.minutes > 0:
-      return `Publicado hace ${minutes} segudos y ${seconds} segudos`
-    default:
-      return `Publicado hace ${seconds} segudos`
+  if (minutes < 1 && hours < 1 && seconds > 0) {
+    return `Hace ${seconds}segs.`
+  } else if (hours < 1 && minutes > 0) {
+    return `Hace ${minutes}`
+  } else if (days < 1 && minutes > 0) {
+    return `${hours}h`
+  } else if (months < 1 && years < 1 && days > 20) {
+    return `${hours}h`
+  } else if (years < 1) {
+    return created.toLocaleString("default", {
+      month: "short",
+      day: "numeric",
+    })
+  } else {
+    return created.toLocaleString("default", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
   }
 }
