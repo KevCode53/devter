@@ -26,7 +26,10 @@ export const addDevit = async ({
 
 // Get last devits
 export const fetchLatestDevits = async () => {
-  const response = await supabase.from("devits").select("*")
+  const response = await supabase
+    .from("devits")
+    .select("*")
+    .order("created_at", { ascending: false })
   // const devits = response.then((res) => {})
   return response
 }

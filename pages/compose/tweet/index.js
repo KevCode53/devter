@@ -1,11 +1,14 @@
 import AppLayout from "components/AppLayout"
 import Avatar from "components/Avatar"
 import Button from "components/Button"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Styles from "./styles.module.css"
 import { useUser } from "hooks/useUser"
 import { addDevit } from "supabase/devit"
 import { useRouter } from "next/router"
+import Head from "next/head"
+import BackArrow from "components/Icons/BackArrow"
+import { downloadImage, uploadImage } from "supabase/upload"
 
 const CMOPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -14,15 +17,72 @@ const CMOPOSE_STATES = {
   ERROR: -1,
 }
 
+const DRAG_IMAGE_STATES = {
+  ERROR: -1,
+  NONE: 0,
+  DRAG_OVER: 1,
+  UPLOADING: 2,
+  COMPLETE: 3,
+}
+
 const Tweet = () => {
   const [message, setMessage] = useState("")
   const [status, setStatus] = useState(CMOPOSE_STATES.USER_NOT_KNOWN)
+  const [drag, setDrag] = useState(null)
+  const [task, setTask] = useState(null)
+  const [imgUrl, setImgUrl] = useState(null)
   const { user } = useUser()
   const router = useRouter()
+  const refTextArea = useRef()
+
+  useEffect(() => {
+    if (task) {
+      const onProgess = () => {}
+      const onError = () => {}
+      const onComplete = () => {
+        console.log("onComplete")
+      }
+    }
+  }, [task])
 
   const handleChange = (event) => {
     const { value } = event.target
     setMessage(value)
+  }
+
+  const handleDragEnter = (e) => {
+    e.preventDefault()
+    refTextArea.current.classList.add(Styles.Drag)
+    setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
+  }
+  const handleDragleave = (e) => {
+    e.preventDefault()
+    refTextArea.current.classList.remove(Styles.Drag)
+    setDrag(DRAG_IMAGE_STATES.NONE)
+  }
+  const hanldeDrop = (e) => {
+    e.preventDefault()
+    refTextArea.current.classList.remove(Styles.Drag)
+    setDrag(DRAG_IMAGE_STATES.NONE)
+
+    const file = e.dataTransfer.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (e) => {
+      // console.log(e.target.result)
+      e.preventDefault(e.target.result)
+      setImgUrl(e.target.result)
+    }
+
+    const task = uploadImage(file)
+    task.then(({ data, error }) => {
+      console.log(data)
+      if (!error) {
+        console.log("ingreso a mostrar la imagen")
+        downloadImage(data.path)
+      }
+    })
+    setTask(task)
   }
 
   const handleSubmit = (event) => {
@@ -35,6 +95,7 @@ const Tweet = () => {
       email: user.email,
       avatar: user.avatar,
       username: user.username,
+      img: imgUrl,
     })
       .then(() => {
         router.push("/home")
@@ -49,9 +110,16 @@ const Tweet = () => {
 
   return (
     <AppLayout>
+      <Head>
+        <title>Publica un nuevo Devit | Devter</title>
+      </Head>
       <header className={Styles.header}>
-        <button>back</button>
-        <div className={Styles.div}></div>
+        <button>
+          <BackArrow />
+        </button>
+        <div className={Styles.div}>
+          <Button disabled={isButtonDisabled}>Devitear</Button>
+        </div>
       </header>
       <div className={Styles.contianer}>
         {(user !== undefined) & (user !== null) ? (
@@ -62,11 +130,22 @@ const Tweet = () => {
         <div>
           <form onSubmit={handleSubmit}>
             <textarea
+              ref={refTextArea}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragleave}
+              onDrop={hanldeDrop}
               onChange={handleChange}
               className={Styles.textarea}
               placeholder="¿Qué esta pasando?"
             ></textarea>
-            <Button disabled={isButtonDisabled}>Devitear</Button>
+            <section className={Styles.imgContainer}>
+              {imgUrl && (
+                <div>
+                  <button onClick={() => setImgUrl(null)}>X</button>
+                  <img src={imgUrl} />{" "}
+                </div>
+              )}
+            </section>
           </form>
           <section className={Styles.section}>
             <div>

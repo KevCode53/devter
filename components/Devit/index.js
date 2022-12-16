@@ -2,9 +2,10 @@ import Styles from "./styles.module.css"
 import Avatar from "components/Avatar"
 import { useEffect } from "react"
 import { getTimeGo } from "utils/timeGo"
+import { useTimeAgo } from "hooks/useTimeAgo"
 
 const Devit = ({ avatar, username, created_at, name, content, id }) => {
-  const timeGo = getTimeGo(created_at)
+  const timeGo = useTimeAgo(created_at)
   return (
     <>
       <article className={Styles.article} key={id}>

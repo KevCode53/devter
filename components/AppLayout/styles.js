@@ -16,6 +16,8 @@ export default css`
     height: 100%;
     overflow-y: auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   @media (prefers-color-scheme: dark) {
     main {
