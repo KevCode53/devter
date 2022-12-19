@@ -1,0 +1,46 @@
+.textarea {
+  border: 0.2rem solid transparent;
+  padding: 1.5rem;
+  font-size: 2.1rem;
+  width: 100%;
+  resize: none;
+  height: 5.7rem;
+  /* min-height: 20rem; */
+  outline: 0;
+  font-weight: 400;
+  font-size: 2rem;
+  border-radius: 1rem;
+}
+.textarea::-webkit-scrollbar {
+  width: 0;
+}
+
+.imgContainer {
+  display: grid;
+  width: 100%;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(auto-fit, minmax(10rem, 20rem));
+}
+.imgContainer div {
+  position: relative;
+}
+.imgContainer div button {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  background: rgba(0, 0, 0, 0.6);
+  transition: 0.2s all ease;
+  border-radius: 100%;
+}
+.imgContainer div button:hover {
+  background: rgba(88, 88, 88, 0.7);
+}
+
+.imgContainer div img {
+  object-fit: cover;
+  height: 100%;
+  border-radius: 1rem;
+}

@@ -8,6 +8,7 @@ import { addDevit } from "supabase/devit"
 import { useRouter } from "next/router"
 import Head from "next/head"
 import BackArrow from "components/Icons/BackArrow"
+import FormCompose from "components/FormCompose"
 import { downloadImage, uploadImage } from "supabase/upload"
 
 const CMOPOSE_STATES = {
@@ -47,6 +48,9 @@ const Tweet = () => {
 
   const handleChange = (event) => {
     const { value } = event.target
+    event.target.style.height = `5.8rem`
+    const scHeight = event.target.scrollHeight
+    event.target.style.height = `${scHeight}px`
     setMessage(value)
   }
 
@@ -118,7 +122,9 @@ const Tweet = () => {
           <BackArrow />
         </button>
         <div className={Styles.div}>
-          <Button disabled={isButtonDisabled}>Devitear</Button>
+          <Button onClick={handleSubmit} disabled={isButtonDisabled}>
+            Devitear
+          </Button>
         </div>
       </header>
       <div className={Styles.contianer}>
@@ -128,7 +134,11 @@ const Tweet = () => {
           <Avatar />
         )}
         <div>
-          <form onSubmit={handleSubmit}>
+          <FormCompose
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+          />
+          {/* <form onSubmit={handleSubmit}>
             <textarea
               ref={refTextArea}
               onDragEnter={handleDragEnter}
@@ -146,7 +156,7 @@ const Tweet = () => {
                 </div>
               )}
             </section>
-          </form>
+          </form> */}
           <section className={Styles.section}>
             <div>
               <span>🌐 Cualquier persona puede responder</span>
