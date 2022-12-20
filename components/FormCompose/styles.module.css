@@ -14,18 +14,21 @@
 .textarea::-webkit-scrollbar {
   width: 0;
 }
-
+.drag {
+  border: 0.2rem dashed rgb(47, 51, 54);
+}
 .imgContainer {
-  display: grid;
+  display: flex;
+  /* display: grid;
   width: 100%;
   gap: 1.5rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(auto-fit, minmax(10rem, 20rem));
+  grid-template-rows: repeat(auto-fit, minmax(10rem, 20rem)); */
 }
 .imgContainer div {
   position: relative;
 }
-.imgContainer div button {
+.imgContainer div i {
   position: absolute;
   left: 0.5rem;
   top: 0.5rem;
@@ -34,8 +37,12 @@
   background: rgba(0, 0, 0, 0.6);
   transition: 0.2s all ease;
   border-radius: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.imgContainer div button:hover {
+.imgContainer div i:hover {
   background: rgba(88, 88, 88, 0.7);
 }
 

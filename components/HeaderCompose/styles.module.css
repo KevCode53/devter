@@ -1,0 +1,7 @@
+.header {
+  display: flex;
+  padding: 0.8rem 1.6rem;
+  justify-content: space-between;
+}
+.header button svg {
+}

@@ -87,3 +87,8 @@
 .section ul {
   display: flex;
 }
+.formFooter {
+  display: flex;
+  height: auto;
+  justify-content: space-between;
+}

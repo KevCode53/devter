@@ -1,7 +1,7 @@
-const inedx = ({ src }) => {
+const inedx = ({ src, obj, remove }) => {
   return (
     <div>
-      <button>X</button>
+      <i onClick={() => remove(obj)}>X</i>
       <img src={src} />
     </div>
   )

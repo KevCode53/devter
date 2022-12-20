@@ -8,19 +8,24 @@ export const addDevit = async ({
   email,
   avatar,
   username,
+  images,
 }) => {
-  const response = await supabase.from("devits").insert([
-    {
-      created_at,
-      user_id,
-      content,
-      email,
-      avatar,
-      username,
-      likes_count: 0,
-      shared_count: 0,
-    },
-  ])
+  const response = await supabase
+    .from("devits")
+    .insert([
+      {
+        created_at,
+        user_id,
+        content,
+        email,
+        avatar,
+        username,
+        likes_count: 0,
+        shared_count: 0,
+        images,
+      },
+    ])
+    .select()
   return response
 }
 

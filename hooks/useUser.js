@@ -1,14 +1,11 @@
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { getGitHubUser } from "supabase/client"
-
-const USER_STATES = {
-  NOT_LOGGED: null,
-  NOT_KNOWM: undefined,
-}
+import { UserContext, USER_STATES } from "context/UserContex"
 
 export const useUser = () => {
-  const [user, setUser] = useState(USER_STATES.NOT_KNOWM)
+  const { user, setUser } = useContext(UserContext)
+  // const [user, setUser] = useState(USER_STATES.NOT_KNOWM)
   const router = useRouter()
 
   useEffect(() => {
