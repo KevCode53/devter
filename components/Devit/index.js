@@ -22,7 +22,7 @@ const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
             <p>{content}</p>
             <section>
               {Array.isArray(images) &&
-                images.map((img) => <img key={img.id} src={img.img} />)}
+                images.map((img) => <img key={img.id} src={img.serverPath} />)}
             </section>
           </div>
         </section>

@@ -1,4 +1,6 @@
 :root {
+  --secondary: rgba(15, 149, 232);
+  --secondary-t: rgba(15, 149, 232, 0.6);
   --bg-point: rgba(0, 153, 255, 0.3);
   --dark_bg_transparent: #131313a2;
   --dark_bg: #131313;

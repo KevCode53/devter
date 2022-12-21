@@ -4,6 +4,7 @@ import { useUser } from "./useUser"
 import { addDevit } from "supabase/devit"
 import { uploadImage } from "supabase/upload"
 import { useRouter } from "next/router"
+import { useMessage } from "./useMessage"
 
 const CMOPOSE_STATES = {
   NOT_KNOWN: 0,
@@ -15,17 +16,23 @@ const CMOPOSE_STATES = {
 export const useAddDevit = () => {
   const { user } = useUser()
   const { devit, setDevit } = useContext(DevitContext)
-  const [message, setMessage] = useState("")
+  const [message, setMessageDevit] = useState("")
   const [status, setStatus] = useState(CMOPOSE_STATES.NOT_KNOWN)
   const [btnStatus, setBtnStatus] = useState(true)
   const router = useRouter()
+  const { setMessage } = useMessage()
+  const contentMsg = {
+    title: "Error",
+    content: "Agregue 1 GIF o hasta 4 imagenes..!",
+    show: true,
+  }
 
   const handleChangeTextArea = (e) => {
     const { value } = e.target
-    e.target.style.height = `5.8rem`
+    e.target.style.height = "5.7rem"
     const scHeight = e.target.scrollHeight
     e.target.style.height = `${scHeight}px`
-    setMessage(value)
+    setMessageDevit(value)
   }
 
   useEffect(() => {
@@ -52,44 +59,39 @@ export const useAddDevit = () => {
     // console.log("Se enviara el devit a la base de datos")
     console.log(devit)
     addDevit(devit)
-        .then((res) => {
-            console.log(res)
-            if (Array.isArray(devit.images)) {
-                console.log(res)
-                if (Array.isArray(devit.images)) {
-                    devit.images.map(img=>{
-                        const task = uploadImage(devit.email, img.img)
-                        task.then(res => console.log(res))
-                    })
-                }
-            }
-            router.push("/home")
-        })
-        .catch((err) => {
-            console.error(err)
-            setStatus(CMOPOSE_STATES.ERROR)
-        })
+      .then((res) => {
+        console.log(res)
+        if (Array.isArray(devit.images)) {
+          Array.isArray(devit.images) &&
+            devit.images.map((img) => uploadImage(user.email, img.file))
+        }
+        router.push("/home")
+      })
+      .catch((err) => {
+        console.error(err)
+        setStatus(CMOPOSE_STATES.ERROR)
+      })
   }
 
-  const addImg = (img) => {
-    if (devit.images.length >= 3) {
-      return alert("Agregue 1 GIF o hasta 4 imagenes!")
-    }
-    if (devit.images.find(el => el.id === img.id)) {
-      return alert("Este elemento ya se encuentra en el Devit")
-    }
-    setDevit({ ...devit, 
-      images: [...devit.images, img] 
-    })
+  const addImg = (imgs) => {
+    if (devit.images.length > 4 || imgs.length + devit.images.length > 4)
+      return setMessage(contentMsg)
+
+    // Se buscaba como filtrar las imagenes para no repetir
+
+    const newArray = devit.images.concat(imgs)
+
+    console.log(newArray)
+
+    setDevit({ ...devit, images: newArray })
   }
   const removeImg = (ref) => {
-    const newImgList = devit.images.filter(img => img.id !== ref.id)
+    const newImgList = devit.images.filter((img) => img.id !== ref.id)
     setDevit({
       ...devit,
-      images: newImgList
+      images: newImgList,
     })
   }
-
 
   return {
     devit,
@@ -99,6 +101,6 @@ export const useAddDevit = () => {
     btnStatus,
     uploadDevit,
     addImg,
-    removeImg
+    removeImg,
   }
 }

@@ -1,15 +1,10 @@
 import AppLayout from "components/AppLayout"
 import Avatar from "components/Avatar"
-import Button from "components/Button"
-import { useEffect, useState } from "react"
 import Styles from "./styles.module.css"
 import { useUser } from "hooks/useUser"
-import { addDevit } from "supabase/devit"
-import { useRouter } from "next/router"
 import Head from "next/head"
 import FormCompose from "components/FormCompose"
 import HeaderCompose from "components/HeaderCompose"
-import { useImgDevit } from "hooks/useImgDevit"
 import { DevitContextProvider } from "context/DevitContext"
 
 // Posibles estados del compose
@@ -22,55 +17,40 @@ const CMOPOSE_STATES = {
 
 // Inicio del Componente Devit
 const Tweet = () => {
-  const [message, setMessage] = useState("")
-  const [status, setStatus] = useState(CMOPOSE_STATES.USER_NOT_KNOWN)
+  // const [message, setMessage] = useState("")
   const { user } = useUser()
-  const router = useRouter()
-  const { imgList } = useImgDevit()
 
-  const handleChange = (event) => {
-    const { value } = event.target
-    event.target.style.height = `5.8rem`
-    const scHeight = event.target.scrollHeight
-    event.target.style.height = `${scHeight}px`
-    setMessage(value)
-  }
+  // const handleChange = (event) => {
+  //   const { value } = event.target
+  //   event.target.style.height = `5.8rem`
+  //   const scHeight = event.target.scrollHeight
+  //   event.target.style.height = `${scHeight}px`
+  //   setMessage(value)
+  // }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    setStatus(CMOPOSE_STATES.LOADING)
-    addDevit({
-      created_at: new Date().toISOString(),
-      user_id: user.id,
-      content: message,
-      email: user.email,
-      avatar: user.avatar,
-      username: user.username,
-      images: imgList,
-    })
-      .then((res) => {
-        console.log(res)
-        router.push("/home")
-      })
-      .catch((err) => {
-        console.error(err)
-        setStatus(CMOPOSE_STATES.ERROR)
-      })
-  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   setStatus(CMOPOSE_STATES.LOADING)
+  //   addDevit({
+  //     created_at: new Date().toISOString(),
+  //     user_id: user.id,
+  //     content: message,
+  //     email: user.email,
+  //     avatar: user.avatar,
+  //     username: user.username,
+  //     images: imgList,
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       router.push("/home")
+  //     })
+  //     .catch((err) => {
+  //       console.error(err)
+  //       setStatus(CMOPOSE_STATES.ERROR)
+  //     })
+  // }
 
-  const isButtonDisabled = !message.length || status === CMOPOSE_STATES.LOADING
-
-  useEffect(() => {
-    // setDevit({
-    //   created_at: new Date().toISOString(),
-    //   // user_id: user.id,
-    //   content: message,
-    //   // email: user.email,
-    //   // avatar: user.avatar,
-    //   // username: user.username,
-    //   images: imgList
-    // })
-  }, [message])
+  // const isButtonDisabled = !message.length || status === CMOPOSE_STATES.LOADING
 
   return (
     <AppLayout>
@@ -96,10 +76,7 @@ const Tweet = () => {
             <Avatar />
           )}
           <div>
-            <FormCompose
-              handleSubmit={handleSubmit}
-              handleChange={handleChange}
-            />
+            <FormCompose />
             <section className={Styles.section}>
               <div>
                 <span>🌐 Cualquier persona puede responder</span>
