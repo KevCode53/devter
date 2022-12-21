@@ -21,9 +21,6 @@ const HomePage = () => {
 
   useEffect(() => {
     if (user !== null || user !== undefined) {
-      // fetch("/api/statuses/home_timeline")
-      //   .then((res) => res.json())
-      //   .then(setTimeline)
       fetchLatestDevits().then((res) => {
         setTimeline(res.data)
       })

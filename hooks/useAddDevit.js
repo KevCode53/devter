@@ -36,7 +36,7 @@ export const useAddDevit = () => {
       email: (user && user.email) || "",
       avatar: (user && user.avatar) || "",
       username: (user && user.username) || "",
-      images: [],
+      images: devit ? devit.images : [],
     })
   }, [message])
 
@@ -51,26 +51,45 @@ export const useAddDevit = () => {
     e.preventDefault()
     // console.log("Se enviara el devit a la base de datos")
     console.log(devit)
-    // addDevit(devit)
-    //     .then((res) => {
-    //         console.log(res)
-    //         if (Array.isArray(devit.images)) {
-    //             console.log(res)
-    //             if (Array.isArray(devit.images)) {
-    //                 devit.images.map(img=>{
-    //                     const task = uploadImage(img.path)
-    //                     console.log(task)
-    //                     return task
-    //                 })
-    //             }
-    //         }
-    //         router.push("/home")
-    //     })
-    //     .catch((err) => {
-    //         console.error(err)
-    //         setStatus(CMOPOSE_STATES.ERROR)
-    //     })
+    addDevit(devit)
+        .then((res) => {
+            console.log(res)
+            if (Array.isArray(devit.images)) {
+                console.log(res)
+                if (Array.isArray(devit.images)) {
+                    devit.images.map(img=>{
+                        const task = uploadImage(devit.email, img.img)
+                        task.then(res => console.log(res))
+                    })
+                }
+            }
+            router.push("/home")
+        })
+        .catch((err) => {
+            console.error(err)
+            setStatus(CMOPOSE_STATES.ERROR)
+        })
   }
+
+  const addImg = (img) => {
+    if (devit.images.length >= 3) {
+      return alert("Agregue 1 GIF o hasta 4 imagenes!")
+    }
+    if (devit.images.find(el => el.id === img.id)) {
+      return alert("Este elemento ya se encuentra en el Devit")
+    }
+    setDevit({ ...devit, 
+      images: [...devit.images, img] 
+    })
+  }
+  const removeImg = (ref) => {
+    const newImgList = devit.images.filter(img => img.id !== ref.id)
+    setDevit({
+      ...devit,
+      images: newImgList
+    })
+  }
+
 
   return {
     devit,
@@ -79,5 +98,7 @@ export const useAddDevit = () => {
     message,
     btnStatus,
     uploadDevit,
+    addImg,
+    removeImg
   }
 }

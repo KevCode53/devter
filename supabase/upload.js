@@ -1,18 +1,21 @@
 import { supabase } from "./client"
 
 export const uploadImage = async (file) => {
+  console.log(typeof(file))
   const ref = supabase.storage.from("images")
-  const { data, error } = await ref.upload(`images/${file.name}`, file)
+  const { data, error } = ref.upload(
+    `images/${file.name}`, file
+  )
   if (error) {
     const { statusCode } = error
     statusCode !== "409" && console.error("algo salio mal")
-    return downloadImage(`images/${file.name}`)
+    return getUrlImg(`images/${file.name}`)
   }
-  return downloadImage(data.path)
+  return getUrlImg(data)
 }
 
-export const downloadImage = async (path) => {
-  const ref = await supabase.storage.from("images")
+export const getUrlImg = async (path) => {
+  const ref = await supabase.storage.from("devits")
   const img = ref.getPublicUrl(path)
   return img
 }

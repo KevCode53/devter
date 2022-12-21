@@ -2,16 +2,24 @@ import Styles from "./styles.module.css"
 import ImgCompose from "components/ImgCompose"
 import { useEffect, useRef, useState } from "react"
 import { uploadImage } from "supabase/upload"
-import { useImgDevit } from "hooks/useImgDevit"
 import { useAddDevit } from "hooks/useAddDevit"
 import { useUser } from "hooks/useUser"
+import md5 from "md5"
+import { manageFiles } from "utils/manageFiles"
 
 // Init a Form Component for Devit
 const index = ({ handleChange, handleSubmit }) => {
-  const [updateList, setUpdateList] = useState("")
+
+  const [imgList, setImgList] = useState([])
   const refTextArea = useRef()
-  const { imgList, addImg, removeImg } = useImgDevit()
-  const { handleChangeTextArea, setDevit, btnStatus, devit } = useAddDevit()
+  const {
+    handleChangeTextArea,
+    setDevit,
+    btnStatus,
+    devit,
+    addImg,
+    removeImg
+  } = useAddDevit()
   const { user } = useUser()
 
   const handleDragEnter = (e) => {
@@ -22,34 +30,88 @@ const index = ({ handleChange, handleSubmit }) => {
     e.preventDefault()
     refTextArea.current.classList.remove(Styles.drag)
   }
-  const handleDrop = (e) => {
+  const handleDrop = e => {
+    e.preventDefault()
+    const files = Object.values(e.dataTransfer.files)
+    console.log(files)
+    const listImg = files.map(async img => {
+      const reader = new FileReader()
+      reader.readAsDataURL(img)
+      // reader.onload = e => {
+      //   e.preventDefault(e.target.result)
+        
+      //   addImg(...devit.images, {
+      //     id: md5(e.target.result),
+      //     frontPath: e.target.result,
+      //     serverPath: `${user}/${img.name}`,
+      //     imgFile: img
+      //   })
+      // }
+      reader.onload = () => {
+        return reader.result
+      }
+      console.log(reader.onload)
+    })
+
+  }
+  const handleDrop2 = (e) => {
     e.preventDefault()
     refTextArea.current.classList.remove(Styles.drag)
-    const file = e.dataTransfer.files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = (e) => {
-      // console.log(e.target.result)
-      e.preventDefault(e.target.result)
-      const newImg = {
-        id: e.target.result,
-        path: e.target.result,
-        serverPath: "",
-      }
-      if (imgList.lenght >= 3) {
-        return alert("Agregue un gif o hasta 4 imagenes!")
-      }
-      addImg(newImg)
-      setUpdateList("update")
+
+    const files = e.dataTransfer.files
+
+    if (files.length > 4 || (devit.images.length + files.length) > 4) {
+      return console.error('Agregue 1 GIF o hasta 4 imagenes!')
     }
+    for (let i = 1; i <= files.length; ++i) {
+      const reader = new FileReader()
+      reader.readAsDataURL(files[i-1])
+      reader.onload = (e) => {
+          e.preventDefault(e.target.result)
+          let newImg = {
+              id: md5(e.target.result),
+              frontPath: e.target.result,
+              serverPath: `${user}/${files.name}`,
+              imgFile: files[i-1]
+          }
+          addImg(newImg)
+        }
+      }
+
+    // const reader = new FileReader()
+    // reader.readAsDataURL(file)
+    // reader.onload = (e) => {
+    //   e.preventDefault(e.target.result)
+
+    // }
+    // const file = e.dataTransfer.files[0]
+    // const reader = new FileReader()
+    // reader.readAsDataURL(file)
+    // reader.onload = (e) => {
+    //   e.preventDefault(e.target.result)
+    //   console.log(typeof(e.target.result))
+    //   uploadImage(e.target.result).then(res=>console.log(res))
+    //   const img = e.target.result
+    //   const newImg = {
+    //     id: md5(`${img}-${new Date().toISOString()}`),
+    //     img: img,
+    //     serverPath: ``,
+    //   }
+    //   if (devit.images.lenght >= 3) {
+    //     return alert("Agregue un gif o hasta 4 imagenes!")
+    //   }
+    //   addImg(newImg)
+    //   setUpdateList("update")
+    // }
   }
 
-  useEffect(() => {
-    if (devit !== null) {
-      setDevit({ ...devit, images: imgList })
-    }
-  }, [imgList, updateList])
+  // useEffect(() => {
+  //   if (devit !== null) {
+  //     setDevit({ ...devit, images: imgList })
+  //   }
+  // }, [imgList, updateList])
 
+  // console.log(devit)
   return (
     <form onSubmit={handleSubmit}>
       <textarea
@@ -62,11 +124,11 @@ const index = ({ handleChange, handleSubmit }) => {
         placeholder="Que esta pasando?"
       />
       <section className={Styles.imgContainer}>
-        {imgList.map((img) => (
+        {devit && devit.images.map((img) => (
           <ImgCompose
             obj={img}
             key={img.id}
-            src={img.path}
+            src={img.frontPath}
             remove={removeImg}
           />
         ))}

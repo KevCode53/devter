@@ -6,7 +6,6 @@ import { useTimeAgo } from "hooks/useTimeAgo"
 
 const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
   const timeGo = useTimeAgo(created_at)
-  console.log(images)
   return (
     <>
       <article className={Styles.article} key={id}>
@@ -23,7 +22,7 @@ const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
             <p>{content}</p>
             <section>
               {Array.isArray(images) &&
-                images.map((img) => <img key={img.id} src={img.path} />)}
+                images.map((img) => <img key={img.id} src={img.img} />)}
             </section>
           </div>
         </section>

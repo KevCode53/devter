@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useAddDevit } from "./useAddDevit"
 
 export const useImgDevit = () => {
   const [imgList, setImgList] = useState([])
