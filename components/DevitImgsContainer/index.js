@@ -1,5 +1,5 @@
-import FourImgs from "./FourImgs"
 import Styles from "./styles.module.css"
+import FourImgs from "./FourImgs"
 import TreeImgs from "./TreeImgs"
 import TwoImg from "./TwoImg"
 
@@ -10,7 +10,7 @@ const index = ({ imgs }) => {
         <section className={Styles.containerImgs}>
           <div>
             {imgs.map((img) => (
-              <img key={img.id} src={imgs.publicUrl} alt={img.name} />
+              <img key={img.id} src={img.publicUrl} alt={img.name} />
             ))}
           </div>
         </section>

@@ -25,13 +25,11 @@
   display: flex;
   gap: 0.3rem;
   position: relative;
-  min-height: 22.5rem;
 }
 
 .containerImgs > div {
 }
 .containerImgs > div > img {
-  height: 100%;
   border-radius: 0.5rem;
 }
 
@@ -46,7 +44,7 @@
 } */
 
 .containerTwo {
-  width: 100%;
+  /* width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
@@ -56,7 +54,7 @@
   border: 0.2rem solid rgba(47, 51, 54, 0.3);
   background-color: rgba(47, 51, 54, 0.3);
   position: relative;
-  min-height: 22.5rem;
+  min-height: 22.5rem; */
 }
 /* .containerTwo::after {
   content: "";

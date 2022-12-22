@@ -19,6 +19,12 @@ export default css`
     display: flex;
     flex-direction: column;
   }
+
+  main::-webkit-scrollbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   @media (prefers-color-scheme: dark) {
     main {
       background: #131313;
@@ -28,7 +34,7 @@ export default css`
 
   @media (min-width: ${breakpoints.mobile}) {
     main {
-      height: 90vh;
+      height: 100%;
       width: ${breakpoints.mobile};
     }
   }
