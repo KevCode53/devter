@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { DevitContext } from "context/DevitContext"
 import { useUser } from "./useUser"
-import { addDevit } from "supabase/devit"
-import { uploadImage } from "supabase/upload"
+import { addDevit, updateDevit, updateImagesPath } from "supabase/devit"
+import { uploadImage, viewDevitImgsPath } from "supabase/upload"
 import { useRouter } from "next/router"
 import { useMessage } from "./useMessage"
 
@@ -48,23 +48,50 @@ export const useAddDevit = () => {
   }, [message])
 
   useEffect(() => {
-    const isButtonDisabled = devit
-      ? !devit.content.length || status === CMOPOSE_STATES.LOADING
-      : true
+    const isButtonDisabled = devit // Si existe el Devit
+      ? !devit.content.length & !devit.images.length || // Desactiva el boton si esta vacio
+        status === CMOPOSE_STATES.LOADING // Desactiva el botton si esta cargando
+      : true // Activa el boton
     setBtnStatus(isButtonDisabled)
   }, [devit])
 
+  // Method for send the devit from supabase
   const uploadDevit = (e) => {
-    e.preventDefault()
-    // console.log("Se enviara el devit a la base de datos")
-    console.log(devit)
+    e.preventDefault() // Prevent event from button submit
+    setBtnStatus(!btnStatus) // Disable the button
+    setStatus(CMOPOSE_STATES.LOADING) // Chage the status to lading for view progress
+
+    // Call the method for add the devit in supabase
     addDevit(devit)
       .then((res) => {
-        console.log(res)
-        if (Array.isArray(devit.images)) {
-          Array.isArray(devit.images) &&
-            devit.images.map((img) => uploadImage(user.email, img.file))
+        if (res.error) {
+          return setMessage({
+            show: true,
+            content: `Ocurrio algo inesperado no se pudo publicar tu devit.!`,
+          })
         }
+
+        // Upload the images in the devit
+        if (Array.isArray(devit.images)) {
+          // Valid the devit.images is a array
+
+          devit.images.forEach((img) =>
+            // Call the method for upload the image in the storage in supabase
+            uploadImage(res.data[0].id, user.email, img).then((resp) => {
+              console.log(resp)
+            })
+          )
+        }
+        const imagesPublicUrl = devit.images.map((img) => {
+          const updatedImg = img
+          const newPublicUrl = `${viewDevitImgsPath}/${devit.email}/${res.data[0].id}/${img.id}`
+          updatedImg.publicUrl = newPublicUrl
+          return updatedImg
+        })
+
+        updateImagesPath(res.data[0].id, { images: imagesPublicUrl })
+
+        setStatus(CMOPOSE_STATES.SUCCESS)
         router.push("/home")
       })
       .catch((err) => {
@@ -80,8 +107,6 @@ export const useAddDevit = () => {
     // Se buscaba como filtrar las imagenes para no repetir
 
     const newArray = devit.images.concat(imgs)
-
-    console.log(newArray)
 
     setDevit({ ...devit, images: newArray })
   }
@@ -104,3 +129,6 @@ export const useAddDevit = () => {
     removeImg,
   }
 }
+
+// https://smptvlonfdonqyadvhir.supabase.co/storage/v1/object/public/devits/kpalmar@miumg.edu.gt/158/0f9d1fda146bb233b3a8f050841c01c3
+// https://smptvlonfdonqyadvhir.supabase.co/storage/v1/object/public/devits/158/0f9d1fda146bb233b3a8f050841c01c3

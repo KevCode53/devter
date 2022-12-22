@@ -1,40 +1,108 @@
+.containerImgs::after {
+  content: "";
+  top: calc(50% - 0.25rem);
+  height: 0.5rem;
+  width: 100%;
+  position: absolute;
+  background: red;
+}
+.containerImgs::before {
+  content: "";
+  left: calc(50% - 0.25rem);
+  height: 100%;
+  width: 0.5rem;
+  position: absolute;
+  background: yellow;
+}
+
 .containerImgs {
-  aspect-ratio: 16 / 9;
   border-radius: 2.5rem;
   overflow: hidden;
   margin-top: 1.4rem;
   border: 0.2rem solid rgba(47, 51, 54, 0.3);
+  border-radius: 2.5rem;
+  background-color: rgba(47, 51, 54, 0.3);
   display: flex;
   gap: 0.3rem;
+  position: relative;
+  min-height: 22.5rem;
 }
 
-.oneImg {
-  width: 100%;
+.containerImgs > div {
+}
+.containerImgs > div > img {
   height: 100%;
+  border-radius: 0.5rem;
+}
+
+/* .oneImg {
+  width: 100%;
 }
 
 .oneImg > img {
   height: 100%;
   object-fit: cover;
   border-radius: 0.3rem;
-}
+} */
 
-.twoImgs {
-  aspect-ratio: 7 / 8;
+.containerTwo {
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+  gap: 0.3rem;
+  border-radius: 2.5rem;
+  border: 0.2rem solid rgba(47, 51, 54, 0.3);
+  background-color: rgba(47, 51, 54, 0.3);
+  position: relative;
+  min-height: 22.5rem;
+}
+/* .containerTwo::after {
+  content: "";
+  top: calc(50% - .25rem);
+  height: .5rem;
+  width: 100%;
+  position: absolute;
+  background: red;
+}
+.containerTwo::before {
+  content: "";
+  left: calc(50% - .25rem);
+  height: 100%;
+  width: .5rem;
+  position: absolute;
+  background: yellow;
+} */
+.containerTwo > div > img {
+  aspect-ratio: 7/9;
+  border-radius: 0.5rem;
+}
+/* .twoImgs {
+  aspect-ratio: 7 / 8;
 }
 .twoImgs > img {
   height: 100%;
   border-radius: 0.3rem;
+} */
+
+.containerTree {
 }
 .treeImgs {
   aspect-ratio: 7 / 8;
   width: 100%;
   overflow: hidden;
+  max-height: 100%;
+  gap: 0.3rem;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  align-items: center;
+  justify-content: end;
 }
-.cuarterContainer > {
-  width: 100%;
+.cuarterContainer {
+  position: relative;
+}
+.cuarterContainer > img {
+  object-fit: contain;
+  border-radius: 0.3rem;
 }

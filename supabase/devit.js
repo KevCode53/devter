@@ -33,8 +33,20 @@ export const addDevit = async ({
 export const fetchLatestDevits = async () => {
   const response = await supabase
     .from("devits")
-    .select("*")
+    .select()
     .order("created_at", { ascending: false })
   // const devits = response.then((res) => {})
+  return response
+}
+
+// update publicImagesPath
+export const updateImagesPath = (id, { images: array }) => {
+  updateDevit(id, { images: array })
+}
+
+// Update Devit
+export const updateDevit = async (id, values) => {
+  const response = await supabase.from("devits").update(values).eq("id", id)
+
   return response
 }

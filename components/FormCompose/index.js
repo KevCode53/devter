@@ -38,12 +38,33 @@ const index = ({ handleChange, handleSubmit }) => {
       })
     }
     const selectFilesArray = Array.from(selectFiles)
+
+    // Manejando las Imagenes como Promesas
+    // const imgsArrayPromise = selectFilesArray.map((file) => {
+    //   const promise = new Promise((resolve, reject) => {
+    //     const reader = new FileReader()
+    //     reader.readAsDataURL(file)
+    //     reader.onload = (e) => {
+    //       const img = {
+    //         id: md5(e.target.result),
+    //         localPreview: e.target.result,
+    //         serverPath: '',
+    //         file
+    //       }
+    //       resolve(img)
+    //     }
+    //     if(reader.error) { reject(reader.error)}
+    //   })
+    //   return promise
+    // })
+
+    // Este codigo funciona correctamente solo se probara otra manera de hacerlo
     const imagesArray = selectFilesArray.map((file) => {
       const urlObj = URL.createObjectURL(file)
       const img = {
         id: md5(urlObj),
         localPreview: urlObj,
-        serverPath: `${viewDevitImgsPath}/${user.email}/${file.name}`,
+        publicUrl: "",
         file,
       }
       return img

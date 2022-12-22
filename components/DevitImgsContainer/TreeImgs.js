@@ -1,26 +1,28 @@
+import { useState, useEffect } from "react"
 import Styles from "./styles.module.css"
 
 const TreeImgs = ({ imgs }) => {
-  const leftImg = imgs.slice(0, 1)
-  const rightImgs = imgs.slice(1)
+  const [leftSide, setLefSide] = useState([])
+  const [rightSide, setRightSide] = useState([])
 
-  console.log("Left")
-  console.log(leftImg)
-  console.log("right")
-  console.log(rightImgs)
+  useEffect(() => {
+    setLefSide([imgs[0]])
+    setRightSide([imgs[1], imgs[2]])
+  }, [])
+
   return (
-    <>
-      <div className={Styles.twoImgs}>
-        <img src={leftImg[0].serverPath}></img>
-      </div>
-      <div className={Styles.treeImgs}>
-        {rightImgs.map((img) => (
-          <div key={img.id} className={Styles.cuarterContainer}>
-            <img src={img.serverPath} />
-          </div>
+    <section>
+      <div>
+        {leftSide.map((img) => (
+          <img key={img.id} src={img.publicUrl} alt={img.name} />
         ))}
       </div>
-    </>
+      <div>
+        {rightSide.map((img) => (
+          <img key={img.id} src={img.publicUrl} alt={img.name} />
+        ))}
+      </div>
+    </section>
   )
 }
 
