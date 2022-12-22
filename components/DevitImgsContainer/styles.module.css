@@ -1,0 +1,40 @@
+.containerImgs {
+  aspect-ratio: 16 / 9;
+  border-radius: 2.5rem;
+  overflow: hidden;
+  margin-top: 1.4rem;
+  border: 0.2rem solid rgba(47, 51, 54, 0.3);
+  display: flex;
+  gap: 0.3rem;
+}
+
+.oneImg {
+  width: 100%;
+  height: 100%;
+}
+
+.oneImg > img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.3rem;
+}
+
+.twoImgs {
+  aspect-ratio: 7 / 8;
+  width: 100%;
+}
+.twoImgs > img {
+  height: 100%;
+  border-radius: 0.3rem;
+}
+.treeImgs {
+  aspect-ratio: 7 / 8;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+.cuarterContainer > {
+  width: 100%;
+}

@@ -3,6 +3,7 @@ import Avatar from "components/Avatar"
 import { useEffect } from "react"
 import { getTimeGo } from "utils/timeGo"
 import { useTimeAgo } from "hooks/useTimeAgo"
+import DevitImgsContainer from "components/DevitImgsContainer"
 
 const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
   const timeGo = useTimeAgo(created_at)
@@ -39,8 +40,10 @@ const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
           </div>
           <div>
             <p>{content}</p>
-            <section className={Styles.section}>
-              {(images !== null) & Array.isArray(images) &&
+            <span>Imagenes: {images.length}</span>
+            {images && <DevitImgsContainer imgs={images} />}
+            {/* <section className={Styles.section}> */}
+            {/* {(images !== null) & Array.isArray(images) &&
               images.length === 1 ? (
                 <div>
                   <img src={images[0].serverPath} />
@@ -78,8 +81,8 @@ const Devit = ({ avatar, username, created_at, name, content, id, images }) => {
                     </div>
                   </>
                 )
-              )}
-            </section>
+              )} */}
+            {/* </section> */}
           </div>
         </section>
       </article>
