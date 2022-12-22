@@ -12,3 +12,24 @@
   font-weight: 100;
   color: rgba(255, 255, 255, 0.5);
 }
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  border-radius: 2.5rem;
+  overflow: hidden;
+  gap: 0.3rem;
+  max-height: 40rem;
+}
+.section div {
+  margin-right: 0 !important;
+  display: flex;
+  flex-direction: column;
+  max-height: 30rem;
+}
+.section div img {
+  width: 100%;
+  /* height: 100%; */
+  object-fit: cover;
+  border-radius: 0.3rem;
+}
