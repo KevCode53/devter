@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow: hidden;
+    height: 11rem;
+    
+    & > div:last-child {
+        border-top: .1rem solid rgba(252, 252, 252, .5);
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+}
